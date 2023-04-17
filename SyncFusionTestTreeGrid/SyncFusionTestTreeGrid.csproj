@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.JSInterop" Version="6.0.10" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="21.1.35" />
+    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="21.1.35" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="21.1.35" />
+    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="21.1.35" />
+  </ItemGroup>
+
+</Project>

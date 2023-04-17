@@ -1,0 +1,61 @@
+﻿@namespace SyncFusionTestWeather
+
+@page "/"
+
+@using Syncfusion.Blazor.TreeGrid
+@using Syncfusion.Blazor.Buttons
+
+@inject WeatherForecastService ForecastService
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<SfButton @onclick="@ToggleDataSource">@buttonLabel</SfButton>
+<SfNumericTextBox ID="gridrowcount" @bind-Value="@gridRowCount" Readonly="true" ShowSpinButton="false"></SfNumericTextBox>
+
+<SfTreeGrid DataSource="forecasts" EnableVirtualization="false" IdMapping="Day" ParentIdMapping="Month" TreeColumnIndex="1" Toolbar="@(new List<string>() { "Update" })" >
+    <TreeGridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="Syncfusion.Blazor.TreeGrid.EditMode.Batch" ShowConfirmDialog="false"></TreeGridEditSettings>
+
+    <TreeGridColumns>
+        <TreeGridColumn Field="Month" ></TreeGridColumn>
+        <TreeGridColumn Field="Day" IsPrimaryKey=true ></TreeGridColumn>
+        <TreeGridColumn Field="Date" ></TreeGridColumn>
+        <TreeGridColumn Field="TemperatureC" ></TreeGridColumn>
+        <TreeGridColumn Field="TemperatureF" ></TreeGridColumn>
+        <TreeGridColumn Field="Summary" ></TreeGridColumn>
+    </TreeGridColumns>
+
+</SfTreeGrid>
+
+@code {
+    private List<WeatherForecast> forecasts;
+
+    private bool dataSourceWithEmptyColumn { get; set; } = false;
+
+    private string buttonLabel {
+        get
+        {
+            if (dataSourceWithEmptyColumn)
+                return "DataSource2";
+            else
+                return "DataSource1";
+        }
+    }
+
+    protected int gridRowCount { get; set; } = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(new DateTime(2023, 3, 31), dataSourceWithEmptyColumn);
+
+    }
+
+    protected async Task ToggleDataSource()
+    {
+        dataSourceWithEmptyColumn = !dataSourceWithEmptyColumn;
+        forecasts = await ForecastService.GetForecastAsync(new DateTime(2023, 3, 31), dataSourceWithEmptyColumn);
+    }
+
+}
